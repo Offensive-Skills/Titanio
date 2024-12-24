@@ -100,3 +100,10 @@ titanio --deep_search 'Man-in-the-Middle'
   ---------------
   Salir
 ```
+
+
+---
+# License 
+Titanio © 2024 by Offensive Skills is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+
+You can read more about the License in the [`LICENSE` documentation](./LICENSE.md)
