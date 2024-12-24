@@ -1,0 +1,355 @@
+#!/usr/bin/env python3
+
+import sys
+import json
+import os
+import subprocess
+import tempfile
+import shutil
+from InquirerPy import inquirer
+from InquirerPy.separator import Separator
+from rich.console import Console
+from rich.markdown import Markdown
+
+# Inicializar Rich Console
+console = Console()
+
+# Rutas de archivos (ajusta según tu entorno)
+TOOLS_JSON_PATH = "/etc/titanio/tools.json"
+MARKDOWN_DIR = "/usr/share/titanio/markdown_files"
+REPO_URL = "https://github.com/Offensive-Skills/Titanio.git"
+
+def load_tools_data():
+    try:
+        with open(TOOLS_JSON_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        console.print("[red]El archivo 'tools.json' no se encontró.[/red]")
+        sys.exit(1)
+    except json.JSONDecodeError as e:
+        console.print(f"[red]Error al parsear 'tools.json': {e}[/red]")
+        sys.exit(1)
+
+def is_tool_level(current_level):
+    """
+    Determina si el nivel actual es un nivel de herramientas.
+    Es verdadero si TODOS los valores son cadenas (nombres de archivos Markdown).
+    """
+    if not isinstance(current_level, dict):
+        return False
+    return all(isinstance(v, str) for v in current_level.values())
+
+def search_tools(tools_data, query):
+    results = []
+    for category, subtools in tools_data.items():
+        results.extend(search_recursive(subtools, query, path=[category]))
+    return results
+
+def search_recursive(current_level, query, path):
+    results = []
+    for key, value in current_level.items():
+        if isinstance(value, dict):
+            if is_tool_level(value):
+                # Es un nivel de herramientas
+                for tool_name, md_file in value.items():
+                    if query.lower() in tool_name.lower():
+                        results.append((path + [tool_name], md_file))
+            else:
+                # Es una subcategoría, seguir buscando
+                results.extend(search_recursive(value, query, path + [key]))
+    return results
+
+def display_tool_info(tool_path, markdown_file):
+    markdown_path = os.path.join(MARKDOWN_DIR, markdown_file)
+    console.print(f"[blue]Cargando información de {markdown_file}...[/blue]")
+    if os.path.isfile(markdown_path):
+        try:
+            with open(markdown_path, "r", encoding="utf-8") as f:
+                markdown_content = f.read()
+            md = Markdown(markdown_content)
+            console.print(md)
+        except Exception as e:
+            console.print(f"[red]Error al leer el archivo Markdown: {e}[/red]")
+    else:
+        console.print(f"[red]El archivo Markdown '{markdown_file}' no se encontró.[/red]")
+    console.print("\nPresiona [bold green]Enter[/bold green] para volver al menú.")
+    input()
+    # Limpiar la pantalla antes de mostrar el menú de nuevo
+    os.system('clear')
+
+def navigate_menu(current_level, path=[]):
+    while True:
+        choices = []
+        if is_tool_level(current_level):
+            # Listar herramientas
+            for tool, md in current_level.items():
+                choices.append(tool)
+        else:
+            # Listar subcategorías
+            for key in current_level.keys():
+                choices.append(key)
+        choices.append(Separator())
+        choices.append("Volver")
+        
+        if not path:
+            choices.append("Salir")
+        
+        message = " Selecciona una opción:"
+            
+        choice = inquirer.select(
+            message=message,
+            choices=choices,
+            default=choices[0],
+            pointer="❯"
+        ).execute()
+        
+        if choice == "Salir":
+            os.system('clear')
+            sys.exit(0)
+        elif choice == "Volver":
+            if path:
+                return  # Regresa al menú anterior
+            else:
+                os.system('clear')
+                sys.exit(0)
+        else:
+            selected = current_level.get(choice)
+            if is_tool_level(current_level):
+                # Es una herramienta, mostrar información
+                tool_name = choice
+                markdown_file = selected
+                display_tool_info(path + [tool_name], markdown_file)
+                # Después de mostrar la información, el bucle continúa y se muestra el menú actual nuevamente
+            elif isinstance(selected, dict):
+                # Es una subcategoría, navegar más profundo
+                navigate_menu(selected, path + [choice])
+            else:
+                console.print("[red]Selección inválida.[/red]")
+
+def deep_search_tools(tools_data, search_word):
+    """
+    Busca de forma recursiva la palabra especificada dentro del contenido de los archivos Markdown.
+    Devuelve una lista de herramientas cuyo contenido contiene la palabra.
+    """
+    matching_tools = []
+    for category, subtools in tools_data.items():
+        matching_tools.extend(deep_search_recursive(subtools, search_word, path=[category]))
+    return matching_tools
+
+def deep_search_recursive(current_level, search_word, path):
+    matching_tools = []
+    for key, value in current_level.items():
+        if isinstance(value, dict):
+            if is_tool_level(value):
+                # Es un nivel de herramientas
+                for tool_name, md_file in value.items():
+                    markdown_path = os.path.join(MARKDOWN_DIR, md_file)
+                    if os.path.isfile(markdown_path):
+                        try:
+                            with open(markdown_path, "r", encoding="utf-8") as f:
+                                content = f.read()
+                            if search_word.lower() in content.lower():
+                                matching_tools.append(((path + [tool_name]), md_file))
+                        except Exception as e:
+                            console.print(f"[red]Error al leer '{md_file}': {e}[/red]")
+            else:
+                # Es una subcategoría, seguir buscando
+                matching_tools.extend(deep_search_recursive(value, search_word, path + [key]))
+    return matching_tools
+
+def deep_search_menu(tools_data, search_word):
+    results = deep_search_tools(tools_data, search_word)
+    if not results:
+        console.print(f"[red]No se encontraron herramientas que contengan '{search_word}'.[/red]")
+        input("Presiona [bold green]Enter[/bold green] para continuar.")
+        sys.exit(0)
+    
+    # Crear listas paralelas para las opciones y los archivos Markdown
+    choices = []
+    md_files = []
+    for (path, tool_name), md_file in results:
+        if f" > {tool_name}" not in choices:
+            
+            choice_str = f" > {tool_name}"
+            choices.append(choice_str)
+            md_files.append(md_file)
+
+    
+    # Agregar opción para volver
+    choices.append(Separator())
+    choices.append("Salir")
+    
+    # Mostrar las opciones al usuario
+    choice = inquirer.select(
+        message=f"Resultados para búsqueda profunda '{search_word}':",
+        choices=choices,
+        default=choices[0],
+        pointer="❯"
+    ).execute()
+    
+    if choice == "Salir":
+        os.system('clear')
+        sys.exit(0)
+    else:
+        try:
+            # Encontrar el índice de la opción seleccionada
+            index = choices.index(choice)
+            if index < len(md_files):
+                markdown_file = md_files[index]
+                tool_path = results[index][0]
+                display_tool_info(tool_path, markdown_file)
+                # Permitir al usuario realizar otra búsqueda profunda
+                deep_search_menu(tools_data, search_word)
+            else:
+                # Si se selecciona "Volver"
+                return
+        except ValueError:
+            console.print("[red]Información de la herramienta no disponible.[/red]")
+            input("Presiona [bold green]Enter[/bold green] para continuar.")
+
+def search_menu(tools_data, query):
+    results = search_tools(tools_data, query)
+    if not results:
+        console.print("[red]No se encontraron herramientas que coincidan con la búsqueda.[/red]")
+        input("Presiona [bold green]Enter[/bold green] para continuar.")
+        return  # Cambiado para regresar en lugar de salir
+    
+    # Crear listas paralelas para las opciones y los archivos Markdown
+    choices = []
+    md_files = []
+    
+    for (path, tool_name), md_file in results:
+        if f" > {tool_name}" not in choices:
+            choice_str = f" > {tool_name}"
+            choices.append(choice_str)
+            md_files.append(md_file)
+    
+    # Agregar opción para volver
+    choices.append(Separator())
+    choices.append("Salir")
+    
+    # Mostrar las opciones al usuario
+    choice = inquirer.select(
+        message=f"Resultados para '{query}':",
+        choices=choices,
+        default=choices[0],
+        pointer="❯"
+    ).execute()
+    
+    if choice == "Salir":
+        os.system('clear')
+        sys.exit(0)
+    else:
+        try:
+            # Encontrar el índice de la opción seleccionada
+            index = choices.index(choice)
+            if index < len(md_files):
+                markdown_file = md_files[index]
+                tool_path = results[index][0]
+                display_tool_info(tool_path, markdown_file)
+                # Permitir al usuario realizar otra búsqueda
+                search_menu(tools_data, query)
+            else:
+                # Si se selecciona "Volver"
+                return
+        except ValueError:
+            console.print("[red]Información de la herramienta no disponible.[/red]")
+            input("Presiona [bold green]Enter[/bold green] para continuar.")
+
+
+
+
+
+def main_menu(tools_data):
+    while True:
+        navigate_menu(tools_data)
+
+def run_with_sudo(command):
+    try:
+        subprocess.run(['sudo'] + command, check=True)
+    except subprocess.CalledProcessError as e:
+        console.print(f"[red]Error al ejecutar comando con sudo: {e}[/red]")
+        sys.exit(1)
+
+def perform_update():
+    console.print("[blue]Actualizando la herramienta...[/blue]")
+
+
+    temp_dir = tempfile.mkdtemp()
+    try:
+        subprocess.run(['git', 'clone', REPO_URL, temp_dir], check=True)
+    except subprocess.CalledProcessError as e:
+        console.print(f"[red]Error al clonar el repositorio: {e}[/red]")
+        shutil.rmtree(temp_dir)
+        sys.exit(1)
+
+    try:
+        # Copiar tools.json
+        tools_json_src = os.path.join(temp_dir, 'resources', 'tools.json')
+        tools_json_dest_dir = '/etc/titanio'
+        tools_json_dest = os.path.join(tools_json_dest_dir, 'tools.json')
+
+        run_with_sudo(['mkdir', '-p', tools_json_dest_dir])
+        run_with_sudo(['cp', tools_json_src, tools_json_dest])
+        run_with_sudo(['chmod', '644', tools_json_dest])
+        run_with_sudo(['chown', 'root:root', tools_json_dest])
+
+        # Copiar archivos Markdown
+        md_src_dir = os.path.join(temp_dir, 'resources', 'markdown_files')
+        md_dest_dir = '/usr/share/titanio/markdown_files'
+        run_with_sudo(['mkdir', '-p', md_dest_dir])
+
+        for filename in os.listdir(md_src_dir):
+            if filename.endswith('.md'):
+                src_file = os.path.join(md_src_dir, filename)
+                dest_file = os.path.join(md_dest_dir, filename)
+                run_with_sudo(['cp', src_file, dest_file])
+
+        # Establecer permisos para Markdown
+        for root_dir, dirs, files in os.walk(md_dest_dir):
+            for d in dirs:
+                dir_path = os.path.join(root_dir, d)
+                run_with_sudo(['chmod', '755', dir_path])
+                run_with_sudo(['chown', 'root:root', dir_path])
+            for f in files:
+                file_path = os.path.join(root_dir, f)
+                run_with_sudo(['chmod', '755', file_path])
+                run_with_sudo(['chown', 'root:root', file_path])
+
+        # Copiar el script principal 'titanio' al directorio de binarios
+        titanio_src = os.path.join(temp_dir, 'titanio')
+        titanio_dest = '/usr/local/bin/titanio'  # Ajusta esta ruta según donde esté instalado
+
+        run_with_sudo(['cp', titanio_src, titanio_dest])
+        run_with_sudo(['chmod', '755', titanio_dest])
+        run_with_sudo(['chown', 'root:root', titanio_dest])
+
+        console.print("[green]Actualización completada.[/green]")
+    except Exception as e:
+        console.print(f"[red]Error durante la actualización: {e}[/red]")
+    finally:
+        shutil.rmtree(temp_dir)
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Titanio tool")
+    parser.add_argument('--update', action='store_true', help='Actualizar la herramienta')
+    parser.add_argument('--deep-search', type=str, help='Búsqueda profunda en el contenido de los archivos Markdown')
+    parser.add_argument('query', nargs='*', help='Búsqueda simple por nombre de herramienta')
+
+    args = parser.parse_args()
+
+    if args.update:
+        perform_update()
+    else:
+        tools_data = load_tools_data()
+        os.system('clear')
+        if args.deep_search:
+            search_word = args.deep_search
+            deep_search_menu(tools_data, search_word)
+        elif args.query:
+            query = ' '.join(args.query)
+            search_menu(tools_data, query)
+        else:
+            main_menu(tools_data)

@@ -1,0 +1,490 @@
+{
+  "Básico": {
+    "Gestión de Archivos": {
+      "ls": "ls.md",
+      "cp": "cp.md",
+      "mv": "mv.md",
+      "rm": "rm.md",
+      "mkdir": "mkdir.md",
+      "touch": "touch.md",
+      "pwd": "pwd.md",
+      "chmod": "chmod.md",
+      "chown": "chown.md",
+      "ln": "ln.md",
+      "rmdir": "rmdir.md",
+      "stat": "stat.md"
+    },
+    "Procesamiento de Texto": {
+      "cat": "cat.md",
+      "grep": "grep.md",
+      "awk": "awk.md",
+      "sed": "sed.md",
+      "tr": "tr.md",
+      "wc": "wc.md",
+      "head": "head.md",
+      "tail": "tail.md",
+      "cut": "cut.md",
+      "sort": "sort.md",
+      "uniq": "uniq.md",
+      "diff": "diff.md",
+      "patch": "patch.md",
+      "more": "more.md",
+      "less": "less.md"
+    },
+    "Compresión y Archivado": {
+      "tar": "tar.md",
+      "zip": "zip.md",
+      "unzip": "unzip.md",
+      "7z": "7z.md",
+      "gzip": "gzip.md",
+      "bzip2": "bzip2.md",
+      "xz": "xz.md"
+    },
+    "Utilidades de Red": {
+      "ping": "ping.md",
+      "nslookup": "nslookup.md",
+      "dig": "dig.md",
+      "netstat": "netstat.md",
+      "ifconfig": "ifconfig.md",
+      "ip": "ip.md",
+      "traceroute": "traceroute.md",
+      "route": "route.md",
+      "hostname": "hostname.md",
+      "nmap": "nmap.md",
+      "telnet": "telnet.md",
+      "nc": "nc.md"
+    },
+    "Transferencia de Archivos": {
+      "wget": "wget.md",
+      "curl": "curl.md",
+      "ftp": "ftp.md",
+      "sftp": "sftp.md",
+      "scp": "scp.md",
+      "rsync": "rsync.md"
+    },
+    "Encriptación y Hashing": {
+      "openssl": "openssl.md",
+      "md5sum": "md5sum.md",
+      "sha1sum": "sha1sum.md",
+      "gpg": "gpg.md",
+      "base64": "base64.md",
+      "md5deep": "md5deep.md"
+    },
+    "Miscelánea": {
+      "whoami": "whoami.md",
+      "id": "id.md",
+      "sudo": "sudo.md",
+      "su": "su.md",
+      "env": "env.md",
+      "echo": "echo.md",
+      "find": "find.md",
+      "locate": "locate.md",
+      "which": "which.md",
+      "whatis": "whatis.md",
+      "man": "man.md",
+      "apropos": "apropos.md",
+      "alias": "alias.md",
+      "unalias": "unalias.md",
+      "history": "history.md",
+      "date": "date.md",
+      "uptime": "uptime.md",
+      "uname": "uname.md",
+      "df": "df.md",
+      "du": "du.md",
+      "free": "free.md",
+      "ps": "ps.md",
+      "top": "top.md",
+      "kill": "kill.md",
+      "bg": "bg.md",
+      "fg": "fg.md",
+      "jobs": "jobs.md",
+      "nohup": "nohup.md",
+      "screen": "screen.md",
+      "tmux": "tmux.md",
+      "strings": "strings.md",
+      "file": "file.md",
+      "od": "od.md",
+      "hexdump": "hexdump.md"
+    }
+  },
+  "Hacking Web": {
+    "Inyecciones SQL": {
+      "sqlmap": "sqlmap.md",
+      "Havij": "havij.md",
+      "BBQSQL": "bbqsql.md",
+      "SQLNinja": "sqlninja.md",
+      "jSQL Injection": "jsql_injection.md",
+      "NoSQLMap": "nosqlmap.md"
+    },
+    "Cross-Site Scripting (XSS)": {
+      "XSSer": "xsser.md",
+      "BeEF": "beef.md",
+      "XSStrike": "xsstrike.md",
+      "XSS-Proxy": "xss_proxy.md",
+      "XSS Payloads": "xss_payloads.md"
+    },
+    "LFI y RCE": {
+      "Metasploit": "metasploit.md",
+      "Commix": "commix.md",
+      "Fimap": "fimap.md",
+      "Exploit-DB": "exploit-db.md",
+      "RIPS": "rips.md"
+    },
+    "Escáneres de Vulnerabilidades Web": {
+      "Nikto": "nikto.md",
+      "Burp Suite": "burpsuite.md",
+      "OWASP ZAP": "zap.md",
+      "Acunetix": "acunetix.md",
+      "Wapiti": "wapiti.md",
+      "Arachni": "arachni.md"
+    },
+    "Fuerza Bruta y Enumeración": {
+      "Hydra": "hydra.md",
+      "Dirb": "dirb.md",
+      "Dirbuster": "dirbuster.md",
+      "Gobuster": "gobuster.md",
+      "WFuzz": "wfuzz.md",
+      "CeWL": "cewl.md",
+      "ffuf": "ffuf.md"
+    },
+    "Análisis de Tráfico Web": {
+      "Wireshark": "wireshark.md",
+      "Fiddler": "fiddler.md",
+      "mitmproxy": "mitmproxy.md",
+      "Ettercap": "ettercap.md"
+    },
+    "Explotación de Sesiones": {
+      "Cookie Cadger": "cookie_cadger.md",
+      "SSLstrip": "sslstrip.md",
+      "HSTS Bypass Tools": "hsts_bypass_tools.md"
+    }
+  },
+  "Esteganografía": {
+    "Herramientas de Ocultación de Datos": {
+      "Steghide": "steghide.md",
+      "Stegosuite": "stegosuite.md",
+      "OpenStego": "openstego.md",
+      "OutGuess": "outguess.md",
+      "SilentEye": "silenteye.md"
+    },
+    "Análisis y Extracción": {
+      "ExifTool": "exiftool.md",
+      "Binwalk": "binwalk.md",
+      "zsteg": "zsteg.md",
+      "Stegsolve": "stegsolve.md",
+      "Stegdetect": "stegdetect.md"
+    }
+  },
+  "Criptografía": {
+    "Cracking de Contraseñas": {
+      "John the Ripper": "john_the_ripper.md",
+      "Hashcat": "hashcat.md",
+      "Hydra": "hydra.md",
+      "Medusa": "medusa.md",
+      "Cain & Abel": "cain_and_abel.md",
+      "L0phtCrack": "l0phtcrack.md"
+    },
+    "Generación y Gestión de Claves": {
+      "GPG": "gpg.md",
+      "SSH-Keygen": "ssh-keygen.md",
+      "OpenSSL": "openssl.md"
+    },
+    "Análisis Criptográfico": {
+      "Cryptool": "cryptool.md",
+      "Cryptohaze": "cryptohaze.md",
+      "Hash-Identifier": "hash_identifier.md",
+      "Hashcat-utils": "hashcat_utils.md"
+    },
+    "Cifrado/Descifrado": {
+      "OpenSSL": "openssl.md",
+      "GPG": "gpg.md",
+      "bcrypt": "bcrypt.md",
+      "ccrypt": "ccrypt.md"
+    }
+  },
+  "Escalada de Privilegios": {
+    "Herramientas de Linux": {
+      "LinPEAS": "linpeas.md",
+      "Linux Exploit Suggester": "linux_exploit_suggester.md",
+      "LinEnum": "linenume.md",
+      "unix-privesc-check": "unix_privesc_check.md",
+      "suid3num": "suid3num.md"
+    },
+    "Herramientas de Windows": {
+      "WinPEAS": "winpeas.md",
+      "Windows Exploit Suggester": "windows_exploit_suggester.md",
+      "PowerUp": "powerup.md",
+      "Seatbelt": "seatbelt.md",
+      "Sherlock": "sherlock.md"
+    },
+    "Explotación de Vulnerabilidades": {
+      "Metasploit": "metasploit.md",
+      "Dirty Cow Exploit": "dirty_cow_exploit.md",
+      "Kernel Exploit Scripts": "kernel_exploit_scripts.md"
+    },
+    "Bypass de UAC": {
+      "UACMe": "uacme.md",
+      "Enigma0x3's UAC Bypass": "enigma0x3_uac_bypass.md"
+    }
+  },
+  "Herramientas Auxiliares": {
+    "Generación de Payloads": {
+      "msfvenom": "msfvenom.md",
+      "Veil-Evasion": "veil_evasion.md",
+      "Shellter": "shellter.md",
+      "Unicorn": "unicorn.md",
+      "Empire": "empire.md"
+    },
+    "Pivoting y Tunneling": {
+      "chisel": "chisel.md",
+      "SSH Tunneling": "ssh_tunneling.md",
+      "ProxyChains": "proxychains.md",
+      "Socks5 Servers": "socks5_servers.md"
+    },
+    "Enumeración de Red": {
+      "Netcat": "netcat.md",
+      "Ncat": "ncat.md",
+      "nc": "nc.md",
+      "Smbclient": "smbclient.md",
+      "rpcclient": "rpcclient.md",
+      "nbtscan": "nbtscan.md",
+      "Enum4linux": "enum4linux.md"
+    },
+    "Herramientas de C2": {
+      "Covenant": "covenant.md",
+      "Cobalt Strike": "cobalt_strike.md",
+      "Pupy": "pupy.md",
+      "Merlin": "merlin.md"
+    }
+  },
+  "Forense": {
+    "Análisis de Disco": {
+      "Autopsy": "autopsy.md",
+      "Sleuth Kit": "sleuth_kit.md",
+      "FTK Imager": "ftk_imager.md",
+      "Guymager": "guymager.md",
+      "ddrescue": "ddrescue.md"
+    },
+    "Análisis de Memoria": {
+      "Volatility": "volatility.md",
+      "Rekall": "rekall.md",
+      "Memdump": "memdump.md",
+      "LiME": "lime.md"
+    },
+    "Recuperación de Datos": {
+      "Foremost": "foremost.md",
+      "Scalpel": "scalpel.md",
+      "TestDisk": "testdisk.md",
+      "Photorec": "photorec.md"
+    },
+    "Análisis de Archivos": {
+      "Binwalk": "binwalk.md",
+      "strings": "strings.md",
+      "ExifTool": "exiftool.md",
+      "YARA": "yara.md"
+    },
+    "Análisis de Red": {
+      "Wireshark": "wireshark.md",
+      "NetworkMiner": "networkminer.md",
+      "Xplico": "xplico.md",
+      "TCPdump": "tcpdump.md"
+    }
+  },
+  "Directorio Activo": {
+    "Enumeración y Mapeo": {
+      "BloodHound": "bloodhound.md",
+      "SharpHound": "sharphound.md",
+      "LDAPSearch": "ldapsearch.md",
+      "ADExplorer": "adexplorer.md",
+      "PowerView": "powerview.md"
+    },
+    "Explotación de Active Directory": {
+      "Mimikatz": "mimikatz.md",
+      "Impacket": "impacket.md",
+      "CrackMapExec": "crackmapexec.md",
+      "Kerberoast": "kerberoast.md",
+      "ASREPRoast": "asrepr_ost.md"
+    },
+    "Ataques de Pass-the-Hash": {
+      "WMIExec": "wmiexec.md",
+      "PSEXEC": "psexec.md",
+      "Evil-WinRM": "evil_winrm.md",
+      "PtH Tools": "pth_tools.md"
+    }
+  },
+  "Miscelánea": {
+    "Escaneo y Enumeración": {
+      "nmap": "nmap.md",
+      "Masscan": "masscan.md",
+      "Unicornscan": "unicornscan.md"
+    },
+    "Ataques de Fuerza Bruta": {
+      "Hydra": "hydra.md",
+      "Medusa": "medusa.md",
+      "Patator": "patator.md",
+      "Crowbar": "crowbar.md"
+    },
+    "Recolección de Información": {
+      "theHarvester": "theharvester.md",
+      "Recon-ng": "recon_ng.md",
+      "Shodan": "shodan.md",
+      "Maltego": "maltego.md",
+      "FOCA": "foca.md"
+    },
+    "Análisis de Malware": {
+      "Cuckoo Sandbox": "cuckoo_sandbox.md",
+      "REMnux": "remnux.md",
+      "Radare2": "radare2.md",
+      "Ghidra": "ghidra.md",
+      "IDA Pro": "ida_pro.md"
+    },
+    "Ingeniería Social": {
+      "SET (Social-Engineer Toolkit)": "set_social_engineer_toolkit.md",
+      "King Phisher": "king_phisher.md",
+      "Gophish": "gophish.md"
+    },
+    "Análisis de Código": {
+      "SonarQube": "sonarqube.md",
+      "FindBugs": "findbugs.md",
+      "Checkmarx": "checkmarx.md"
+    },
+    "Herramientas de Automatización": {
+      "AutoRecon": "autorecon.md",
+      "Sn1per": "sn1per.md",
+      "Osmedeus": "osmedeus.md"
+    }
+  },
+  "Hacking Wi-Fi": {
+    "Auditoría de Redes Inalámbricas": {
+      "Aircrack-ng": "aircrack-ng.md",
+      "Reaver": "reaver.md",
+      "Wifite": "wifite.md",
+      "Fern WiFi Cracker": "fern_wifi_cracker.md",
+      "Kismet": "kismet.md"
+    },
+    "Ataques de Redes Inalámbricas": {
+      "Cowpatty": "cowpatty.md",
+      "Wifiphisher": "wifiphisher.md",
+      "MDK3": "mdk3.md",
+      "Fluxion": "fluxion.md"
+    },
+    "Análisis de Protocolo": {
+      "Wireshark": "wireshark.md",
+      "Acrylic Wi-Fi": "acrylic_wifi.md",
+      "inSSIDer": "inssider.md"
+    }
+  },
+  "Ingeniería Inversa": {
+    "Desensambladores y Depuradores": {
+      "Ghidra": "ghidra.md",
+      "IDA Pro": "ida_pro.md",
+      "Radare2": "radare2.md",
+      "OllyDbg": "ollydbg.md",
+      "Immunity Debugger": "immunity_debugger.md"
+    },
+    "Análisis de Binarios": {
+      "Binwalk": "binwalk.md",
+      "strings": "strings.md",
+      "ltrace": "ltrace.md",
+      "strace": "strace.md",
+      "objdump": "objdump.md",
+      "gdb": "gdb.md"
+    },
+    "Decompiladores": {
+      "Jadx": "jadx.md",
+      "JD-GUI": "jd-gui.md",
+      "DotPeek": "dotpeek.md"
+    }
+  },
+  "Explotación de Redes": {
+    "Ataques de MITM": {
+      "Ettercap": "ettercap.md",
+      "Bettercap": "bettercap.md",
+      "MITMf": "mitmf.md",
+      "SSLstrip": "sslstrip.md"
+    },
+    "Spoofing": {
+      "Arpspoof": "arpspoof.md",
+      "DNSChef": "dnschef.md",
+      "Responder": "responder.md"
+    },
+    "Sniffers": {
+      "Wireshark": "wireshark.md",
+      "TCPdump": "tcpdump.md",
+      "dsniff": "dsniff.md"
+    }
+  },
+  "Sistemas de Control de Versiones": {
+    "Herramientas": {
+      "Git": "git.md",
+      "Subversion": "subversion.md",
+      "Mercurial": "mercurial.md"
+    },
+    "Ataques Específicos": {
+      "GitTools": "gittools.md",
+      "DVCS-Pillage": "dvcs_pillage.md"
+    }
+  },
+  "Seguridad en la Nube": {
+    "Enumeración y Explotación": {
+      "AWS CLI": "aws_cli.md",
+      "Azure CLI": "azure_cli.md",
+      "GCP SDK": "gcp_sdk.md",
+      "CloudBrute": "cloudbrute.md",
+      "Pacu": "pacu.md",
+      "ScoutSuite": "scoutsuite.md"
+    },
+    "Herramientas de Seguridad": {
+      "CloudSploit": "cloudsploit.md",
+      "Prowler": "prowler.md",
+      "GCPBucketBrute": "gcpbucketbrute.md"
+    }
+  },
+  "Contenedores y Virtualización": {
+    "Seguridad en Contenedores": {
+      "Dockerscan": "dockerscan.md",
+      "Clair": "clair.md",
+      "Anchore": "anchore.md"
+    },
+    "Explotación de Contenedores": {
+      "CTF Challenges": "ctf_challenges.md",
+      "Breakout Scripts": "breakout_scripts.md",
+      "Privilege Escalation in Docker": "privilege_escalation_in_docker.md"
+    },
+    "Análisis de Virtualización": {
+      "Virt-what": "virt-what.md",
+      "VBoxManage": "vboxmanage.md",
+      "VMware Tools": "vmware_tools.md"
+    }
+  },
+  "Móvil": {
+    "Análisis de Aplicaciones Móviles": {
+      "MobSF": "mobsf.md",
+      "Drozer": "drozer.md",
+      "Frida": "frida.md",
+      "APKTool": "apktool.md",
+      "JD-GUI": "jd-gui.md"
+    },
+    "Pruebas de Seguridad": {
+      "AndroBugs": "androbios.md",
+      "QARK": "qark.md",
+      "Needle": "needle.md"
+    }
+  },
+  "Automatización y Scripting": {
+    "Lenguajes": {
+      "Python": "python.md",
+      "Bash": "bash.md",
+      "PowerShell": "powershell.md",
+      "Perl": "perl.md",
+      "Ruby": "ruby.md"
+    },
+    "Frameworks": {
+      "Metasploit Framework": "metasploit_framework.md",
+      "Empire": "empire.md",
+      "Pupy": "pupy.md",
+      "Nishang": "nishang.md"
+    }
+  }
+}
+
