@@ -78,14 +78,14 @@ nmap [opciones] destino
 
 Primer comando cuando nos enfrentamos a una máquina (Escaneamos todos los puertos para ver cuáles hay abiertos):
 
-    ```
-    sudo nmap -sS -p- --min-rate 5000 <IP>
-    ```
+```
+sudo nmap -sS -p- --min-rate 5000 <IP>
+```
 
 Después de ver los puertos abiertos, los anotamos y ejecutamos el siguiente comando para hacer un escaneo exclusivo sobre ellos:
 
-    ```
-    nmap -p<puertos> -sCV --min-rate 5000 <IP>
-    ```
+```
+nmap -p<puertos> -sCV --min-rate 5000 <IP>
+```
 
 
